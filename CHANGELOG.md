@@ -4,7 +4,29 @@ If you find this project useful, consider supporting its development:
 <a href="https://www.buymeacoffee.com/hunter.nl" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"></a>
 
 # Changelog
+## [v1.0.3](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.0.3)
+
+
+
+### :bug: Fixes
+
+- [Fix: sort Matter identifiers numerically](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/9) ([#9](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/9))
+
+
+
+
+
+
+
 ## [v1.0.2](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.0.2)
+
+
+
+### :question: Miscellaneous
+
+- [Chore(release): 1.0.2](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/8) ([#8](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/8))
+
+
 
 
 
