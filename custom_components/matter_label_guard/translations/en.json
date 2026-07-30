@@ -3,29 +3,20 @@
     "step": {
       "user": {
         "title": "Matter Label Guard",
-        "description": "Restores a Matter node label only when the device reports an empty label. You can manage labels within the configuration.",
+        "description": "Restores a Matter node label only when the device reports an empty label. Discovered nodes are managed as separate configuration entries.",
         "data": {
           "interval_minutes": "Check interval (minutes)"
         }
       }
-    },
-    "error": {
-      "invalid_identifier": "Use the Matter Server node identifier format, for example @1:2a.",
-      "identifier_exists": "This Matter node is already in the label list. Choose Edit label instead.",
-      "invalid_label": "Enter a label."
     }
   },
   "options": {
     "step": {
       "init": {
         "title": "Matter Label Guard",
-        "description": "Configured node labels:\n{labels}\n\nManage your Matter node labels or the check interval. The integration reloads after saving.",
+        "description": "{nodes} node entries · {guarded} guarded · {offline} offline · {deleted} deleted",
         "menu_options": {
-          "settings": "Check interval",
-          "add_label": "Add a node label",
-          "edit_label": "Edit a node label",
-          "remove_label": "Remove a node label",
-          "reset_labels": "Restore the supplied label list"
+          "settings": "Check interval"
         }
       },
       "settings": {
@@ -33,42 +24,54 @@
         "data": {
           "interval_minutes": "Check interval (minutes)"
         }
-      },
-      "add_label": {
-        "title": "Add a node label",
-        "data": {
-          "identifier": "Matter node identifier",
-          "label": "Label"
-        }
-      },
-      "edit_label": {
-        "title": "Choose a node label",
-        "data": {
-          "identifier": "Matter node identifier"
-        }
-      },
-      "edit_value": {
-        "title": "Edit {identifier}",
-        "data": {
-          "label": "Label"
-        }
-      },
-      "remove_label": {
-        "title": "Remove a node label",
-        "description": "Removing this entry stops Matter Label Guard from restoring its label.",
-        "data": {
-          "identifier": "Matter node identifier"
-        }
-      },
-      "reset_labels": {
-        "title": "Restore the supplied label list",
-        "description": "This discards the current list and restores the supplied labels."
       }
-    },
-    "error": {
-      "invalid_identifier": "Use the Matter Server identifier format, for example @1:2a.",
-      "identifier_exists": "This Matter node is already in the label list. Choose Edit label instead.",
-      "invalid_label": "Enter a label."
+    }
+  },
+  "config_subentries": {
+    "node_label": {
+      "title": "Matter node label",
+      "entry_type": "Matter node label",
+      "initiate_flow": {
+        "user": "Add Matter node",
+        "reconfigure": "Configure Matter node"
+      },
+      "step": {
+        "user": {
+          "title": "Add Matter node",
+          "data": {
+            "identifier": "Matter node"
+          }
+        },
+        "configure": {
+          "title": "Configure Matter node",
+          "description": "Current Matter label: {current_label}\nStatus: {status}",
+          "data": {
+            "label": "Label to restore",
+            "guarded": "Guard this label"
+          }
+        },
+        "reconfigure": {
+          "title": "Matter node label",
+          "menu_options": {
+            "settings": "Label settings",
+            "refresh": "Refresh node status"
+          }
+        },
+        "settings": {
+          "title": "Matter node label",
+          "description": "Current Matter label: {current_label}\nStatus: {status}",
+          "data": {
+            "label": "Label to restore",
+            "guarded": "Guard this label"
+          }
+        }
+      },
+      "abort": {
+        "no_nodes": "All currently discovered Matter nodes already have entries.",
+        "node_not_found": "This Matter node is no longer retained by Matter Server.",
+        "matter_unavailable": "The Matter integration is not currently loaded.",
+        "refresh_successful": "Node status refreshed: {status}."
+      }
     }
   }
 }
