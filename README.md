@@ -51,9 +51,9 @@ another Matter client is preserved as long as that label is not empty.
 
 ### HACS (Recommended)
 
-1. Open **HACS** → **Integrations** → **⋮** → **Custom repositories**
+1. Open **HACS** → **⋮** → **Custom repositories**
 2. Add repository: `hunter-nl/HA-Matter-Label-Guard`, category: **Integration**
-3. Find **Matter Label Guard** and install it
+3. Find **Matter Label Guard** and download it
 4. Restart Home Assistant
 5. Add **Matter Label Guard** in **Settings → Devices & services → Add
    integration**. Choose the check interval and submit it.
