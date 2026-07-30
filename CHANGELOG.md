@@ -4,6 +4,41 @@ If you find this project useful, consider supporting its development:
 <a href="https://www.buymeacoffee.com/hunter.nl" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"></a>
 
 # Changelog
+## [v1.0.1](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.0.1)
+
+
+
+### :sparkles: Features
+
+- [Fix(release): mark prereleases correctly](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/2) ([#2](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/2))
+
+
+
+
+
+
+
+
+### :bug: Fixes
+
+- [Docs: update HACS installation instructions and refactor README](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/5) ([#5](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/5))
+
+- [Fix(release): package HACS integration correctly](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/4) ([#4](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/4))
+
+
+
+
+
+### :memo: Documentation
+
+- [Docs: add pull request approval process documentation](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/3) ([#3](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/3))
+
+
+
+
+
+
+
 ## [v1.0.0](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.0.0)
 
 
@@ -11,8 +46,21 @@ If you find this project useful, consider supporting its development:
 
 
 
+### :question: Miscellaneous
+
+- [Chore(release): 1.0.0](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/1) ([#1](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/1))
+
+
+
+
+
 
 ## ❤️ New Contributors
+
+
+* @releases-manager[bot] made their first contribution
+
+in [#1](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/1)
 
 
 * @hunter-nl made their first contribution
