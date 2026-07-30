@@ -50,13 +50,6 @@
             "guarded": "Dit label bewaken"
           }
         },
-        "reconfigure": {
-          "title": "Matter-knooppuntlabel",
-          "menu_options": {
-            "settings": "Labelinstellingen",
-            "refresh": "Knooppuntstatus vernieuwen"
-          }
-        },
         "settings": {
           "title": "Matter-knooppuntlabel",
           "description": "Huidig Matter-label: {current_label}\nStatus: {status}",
@@ -69,8 +62,7 @@
       "abort": {
         "no_nodes": "Alle momenteel gedetecteerde Matter-knooppunten hebben al een item.",
         "node_not_found": "Dit Matter-knooppunt wordt niet meer door Matter Server bewaard.",
-        "matter_unavailable": "De Matter-integratie is momenteel niet geladen.",
-        "refresh_successful": "Knooppuntstatus vernieuwd: {status}."
+        "matter_unavailable": "De Matter-integratie is momenteel niet geladen."
       }
     }
   }

@@ -124,8 +124,8 @@ class NodeLabelSubentryFlow(ConfigSubentryFlow):
         )
 
     async def async_step_reconfigure(self, user_input: dict[str, Any] | None = None) -> SubentryFlowResult:
-        """Show label settings and the refresh action for a node subentry."""
-        return self.async_show_menu(step_id="reconfigure", menu_options=["settings", "refresh"])
+        """Open the editable node-label form from the native pencil action."""
+        return await self.async_step_settings()
 
     async def async_step_settings(self, user_input: dict[str, Any] | None = None) -> SubentryFlowResult:
         """Update an existing node-label subentry."""
@@ -164,40 +164,6 @@ class NodeLabelSubentryFlow(ConfigSubentryFlow):
             description_placeholders={
                 "current_label": node.label if node else "",
                 "status": "online" if node and node.available else "deleted" if node is None else "offline",
-            },
-        )
-
-    async def async_step_refresh(self, user_input: dict[str, Any] | None = None) -> SubentryFlowResult:
-        """Refresh only this node's retained/deleted and online/offline state."""
-        entry = self._get_entry()
-        subentry = self._get_reconfigure_subentry()
-        identifier = subentry.data[CONF_IDENTIFIER]
-        if not matter_client_available(self.hass):
-            return self.async_abort(reason="matter_unavailable")
-
-        node = discovered_nodes(self.hass, fabric_index(entry)).get(identifier)
-        data = {
-            **subentry.data,
-            CONF_DELETED: node is None,
-            CONF_GUARDED: bool(subentry.data.get(CONF_GUARDED)) and node is not None,
-            CONF_AVAILABLE: node.available if node else False,
-        }
-        self.hass.config_entries.async_update_subentry(
-            entry=entry,
-            subentry=subentry,
-            title=subentry_title(
-                identifier,
-                str(data[CONF_LABEL]),
-                guarded=bool(data[CONF_GUARDED]),
-                deleted=bool(data[CONF_DELETED]),
-                available=bool(data[CONF_AVAILABLE]),
-            ),
-            data=data,
-        )
-        return self.async_abort(
-            reason="refresh_successful",
-            description_placeholders={
-                "status": "deleted" if node is None else "online" if node.available else "offline"
             },
         )
 

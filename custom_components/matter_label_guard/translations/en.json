@@ -50,13 +50,6 @@
             "guarded": "Guard this label"
           }
         },
-        "reconfigure": {
-          "title": "Matter node label",
-          "menu_options": {
-            "settings": "Label settings",
-            "refresh": "Refresh node status"
-          }
-        },
         "settings": {
           "title": "Matter node label",
           "description": "Current Matter label: {current_label}\nStatus: {status}",
@@ -69,8 +62,7 @@
       "abort": {
         "no_nodes": "All currently discovered Matter nodes already have entries.",
         "node_not_found": "This Matter node is no longer retained by Matter Server.",
-        "matter_unavailable": "The Matter integration is not currently loaded.",
-        "refresh_successful": "Node status refreshed: {status}."
+        "matter_unavailable": "The Matter integration is not currently loaded."
       }
     }
   }

@@ -97,7 +97,7 @@ list but is never changed.
 Node titles start with their Matter identifier, for example `(@1:e) Achterdeur`.
 `🛡` means its label is guarded; `⚠` means the node is currently offline; and
 `❌` means it has been deleted from Matter Server, which also disables guarding.
-Use **Refresh node status** in a node’s settings to update that state on demand.
+Opening the node’s pencil action reads its current Matter label and status.
 
 The parent integration’s **Configure** screen shows the total number of node
 entries and the guarded, offline, and deleted counts. Its only setting is the
