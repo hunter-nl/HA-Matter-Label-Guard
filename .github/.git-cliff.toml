@@ -88,6 +88,7 @@ recurse_submodules = false
 commit_parsers = [
   { message = "^chore\\(release\\):", skip = true },
   { message = "^docs\\(changelog\\):", skip = true },
+  { field = "remote.pr_labels", pattern = "release", skip = true },
   { field = "remote.pr_labels", pattern = "wontfix", skip = true },
   { field = "remote.pr_labels", pattern = "invalid", skip = true },
   { field = "remote.pr_labels", pattern = "duplicate", skip = true },
