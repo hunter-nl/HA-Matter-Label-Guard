@@ -4,6 +4,36 @@ If you find this project useful, consider supporting its development:
 <a href="https://www.buymeacoffee.com/hunter.nl" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"></a>
 
 # Changelog
+## [v1.1.0](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.1.0)
+
+
+
+### :sparkles: Features
+
+- [Feat: manage Matter nodes as config subentries](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/12) ([#12](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/12))
+
+
+
+
+
+### :bug: Fixes
+
+- [Fix(changelog): exclude PRs labeled as release from changelog generation](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/11) ([#11](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/11))
+
+
+
+
+
+### :memo: Documentation
+
+- [Docs: protect private data in PR validation](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/13) ([#13](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/13))
+
+
+
+
+
+
+
 ## [v1.0.3](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.0.3)
 
 
@@ -19,14 +49,6 @@ If you find this project useful, consider supporting its development:
 
 
 ## [v1.0.2](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.0.2)
-
-
-
-### :question: Miscellaneous
-
-- [Chore(release): 1.0.2](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/8) ([#8](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/8))
-
-
 
 
 
@@ -50,11 +72,6 @@ If you find this project useful, consider supporting its development:
 
 
 
-
-
-### :question: Miscellaneous
-
-- [Chore(release): 1.0.1](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/6) ([#6](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/6))
 
 
 
@@ -82,14 +99,6 @@ If you find this project useful, consider supporting its development:
 
 ## [v1.0.0](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.0.0)
 
-
-
-
-
-
-### :question: Miscellaneous
-
-- [Chore(release): 1.0.0](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/1) ([#1](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/1))
 
 
 
