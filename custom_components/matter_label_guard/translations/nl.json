@@ -30,6 +30,11 @@
   "config_subentries": {
     "node_label": {
       "title": "Matter-knooppuntlabel",
+      "entry_type": "Matter-knooppuntlabel",
+      "initiate_flow": {
+        "user": "Matter-knooppunt toevoegen",
+        "reconfigure": "Matter-knooppunt configureren"
+      },
       "step": {
         "user": {
           "title": "Matter-knooppunt toevoegen",
