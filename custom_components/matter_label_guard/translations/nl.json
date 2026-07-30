@@ -44,18 +44,18 @@
         },
         "configure": {
           "title": "Matter-knooppunt configureren",
-          "description": "Huidig Matter-label: {current_label}\nStatus: {status}",
+          "description": "Huidig Matter-label: {current_label}\nStatus: {status}\n\nIndien ingeschakeld herstelt Matter Label Guard het geconfigureerde label alleen wanneer Matter een leeg label rapporteert.",
           "data": {
-            "label": "Te herstellen label",
-            "guarded": "Dit label bewaken"
+            "label": "Label gebruiken wanneer bewaking is ingeschakeld",
+            "guarded": "Bewaking inschakelen"
           }
         },
         "settings": {
           "title": "Matter-knooppuntlabel",
-          "description": "Huidig Matter-label: {current_label}\nStatus: {status}",
+          "description": "Huidig Matter-label: {current_label}\nStatus: {status}\n\nIndien ingeschakeld herstelt Matter Label Guard het geconfigureerde label alleen wanneer Matter een leeg label rapporteert.",
           "data": {
-            "label": "Te herstellen label",
-            "guarded": "Dit label bewaken"
+            "label": "Label gebruiken wanneer bewaking is ingeschakeld",
+            "guarded": "Bewaking inschakelen"
           }
         }
       },

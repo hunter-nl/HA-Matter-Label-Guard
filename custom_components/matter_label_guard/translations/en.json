@@ -44,18 +44,18 @@
         },
         "configure": {
           "title": "Configure Matter node",
-          "description": "Current Matter label: {current_label}\nStatus: {status}",
+          "description": "Current Matter label: {current_label}\nStatus: {status}\n\nWhen enabled, Matter Label Guard restores the configured label only if Matter reports an empty label.",
           "data": {
-            "label": "Label to restore",
-            "guarded": "Guard this label"
+            "label": "Label to use when guard is enabled",
+            "guarded": "Enable Guard"
           }
         },
         "settings": {
           "title": "Matter node label",
-          "description": "Current Matter label: {current_label}\nStatus: {status}",
+          "description": "Current Matter label: {current_label}\nStatus: {status}\n\nWhen enabled, Matter Label Guard restores the configured label only if Matter reports an empty label.",
           "data": {
-            "label": "Label to restore",
-            "guarded": "Guard this label"
+            "label": "Label to use when guard is enabled",
+            "guarded": "Enable Guard"
           }
         }
       },
