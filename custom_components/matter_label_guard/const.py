@@ -7,6 +7,7 @@ CONF_GUARDED = "guarded"
 CONF_IDENTIFIER = "identifier"
 CONF_LABEL = "label"
 CONF_DELETED = "deleted"
+CONF_AVAILABLE = "available"
 DEFAULT_INTERVAL_MINUTES = 30
 SUBENTRY_TYPE_NODE = "node_label"
 

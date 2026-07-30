@@ -30,7 +30,7 @@
   "config_subentries": {
     "node_label": {
       "title": "Matter node label",
-      "entry_type": "Matter node label",
+      "entry_type": "Matter node",
       "initiate_flow": {
         "user": "Add Matter node",
         "reconfigure": "Configure Matter node"
@@ -44,33 +44,25 @@
         },
         "configure": {
           "title": "Configure Matter node",
-          "description": "Current Matter label: {current_label}\nStatus: {status}",
+          "description": "Current Matter label: {current_label}\nStatus: {status}\n\nWhen enabled, Matter Label Guard restores the configured label only if Matter reports an empty label.",
           "data": {
-            "label": "Label to restore",
-            "guarded": "Guard this label"
-          }
-        },
-        "reconfigure": {
-          "title": "Matter node label",
-          "menu_options": {
-            "settings": "Label settings",
-            "refresh": "Refresh node status"
+            "label": "Label to use when guard is enabled",
+            "guarded": "Enable Guard"
           }
         },
         "settings": {
           "title": "Matter node label",
-          "description": "Current Matter label: {current_label}\nStatus: {status}",
+          "description": "Current Matter label: {current_label}\nStatus: {status}\n\nWhen enabled, Matter Label Guard restores the configured label only if Matter reports an empty label.",
           "data": {
-            "label": "Label to restore",
-            "guarded": "Guard this label"
+            "label": "Label to use when guard is enabled",
+            "guarded": "Enable Guard"
           }
         }
       },
       "abort": {
         "no_nodes": "All currently discovered Matter nodes already have entries.",
         "node_not_found": "This Matter node is no longer retained by Matter Server.",
-        "matter_unavailable": "The Matter integration is not currently loaded.",
-        "refresh_successful": "Node status refreshed: {status}."
+        "matter_unavailable": "The Matter integration is not currently loaded."
       }
     }
   }

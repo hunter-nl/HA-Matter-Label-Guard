@@ -30,7 +30,7 @@
   "config_subentries": {
     "node_label": {
       "title": "Matter-knooppuntlabel",
-      "entry_type": "Matter-knooppuntlabel",
+      "entry_type": "Matter-knooppunt",
       "initiate_flow": {
         "user": "Matter-knooppunt toevoegen",
         "reconfigure": "Matter-knooppunt configureren"
@@ -44,33 +44,25 @@
         },
         "configure": {
           "title": "Matter-knooppunt configureren",
-          "description": "Huidig Matter-label: {current_label}\nStatus: {status}",
+          "description": "Huidig Matter-label: {current_label}\nStatus: {status}\n\nIndien ingeschakeld herstelt Matter Label Guard het geconfigureerde label alleen wanneer Matter een leeg label rapporteert.",
           "data": {
-            "label": "Te herstellen label",
-            "guarded": "Dit label bewaken"
-          }
-        },
-        "reconfigure": {
-          "title": "Matter-knooppuntlabel",
-          "menu_options": {
-            "settings": "Labelinstellingen",
-            "refresh": "Knooppuntstatus vernieuwen"
+            "label": "Label gebruiken wanneer bewaking is ingeschakeld",
+            "guarded": "Bewaking inschakelen"
           }
         },
         "settings": {
           "title": "Matter-knooppuntlabel",
-          "description": "Huidig Matter-label: {current_label}\nStatus: {status}",
+          "description": "Huidig Matter-label: {current_label}\nStatus: {status}\n\nIndien ingeschakeld herstelt Matter Label Guard het geconfigureerde label alleen wanneer Matter een leeg label rapporteert.",
           "data": {
-            "label": "Te herstellen label",
-            "guarded": "Dit label bewaken"
+            "label": "Label gebruiken wanneer bewaking is ingeschakeld",
+            "guarded": "Bewaking inschakelen"
           }
         }
       },
       "abort": {
         "no_nodes": "Alle momenteel gedetecteerde Matter-knooppunten hebben al een item.",
         "node_not_found": "Dit Matter-knooppunt wordt niet meer door Matter Server bewaard.",
-        "matter_unavailable": "De Matter-integratie is momenteel niet geladen.",
-        "refresh_successful": "Knooppuntstatus vernieuwd: {status}."
+        "matter_unavailable": "De Matter-integratie is momenteel niet geladen."
       }
     }
   }

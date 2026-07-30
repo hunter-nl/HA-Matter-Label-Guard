@@ -35,7 +35,7 @@ runs in the background, so offline or sleeping devices cannot hold up startup.
 - Checks labels after Home Assistant starts and at an interval from 1 minute to
   24 hours.
 - Retries unreachable or sleeping devices at the next scheduled check.
-- Lets you add, edit, remove, or restore the supplied label list without YAML.
+- Discovers Matter nodes automatically and manages each one as a native Home Assistant subentry.
 
 It is intentionally conservative: changing a label directly on a device or in
 another Matter client is preserved as long as that label is not empty.
@@ -76,8 +76,8 @@ not need a Matter Server URL, token, or a second WebSocket client.
 HACS checks this custom repository for published releases and shows an available
 update in **Settings → Updates** (or as **Pending update** in HACS). Before
 upgrading, create a Home Assistant backup and read the release notes. Install
-the update, then restart Home Assistant. Your existing integration configuration
-and label mappings are retained.
+the update (by redownload), then restart Home Assistant. Your existing integration
+configuration and label mappings are retained.
 
 ### Manual
 
@@ -86,19 +86,24 @@ and label mappings are retained.
    `custom_components/matter_label_guard` directory from the desired release.
 3. Restart Home Assistant.
 
-## Configure labels
+## Configure node labels
 
-To add, edit, or remove mappings, open the integration's **Configure** button.
-Home Assistant shows ordinary forms and dropdowns.
-When adding a device, use its Matter Server node identifier (for example
-`@1:2a`) and enter the desired label. Both portions of the identifier are
-hexadecimal: `@<fabric-id>:<node-id>`. Saving any change reloads the integration
-automatically.
+After adding the integration, Matter Label Guard discovers the nodes retained by
+Home Assistant's Matter Server and creates one **Matter node** subentry for
+each. Open a node’s settings to see its current Matter label, choose the label
+to restore, and enable **Guard this label**. An unguarded node is kept in the
+list but is never changed.
 
-The supplied list initially contains `@0:0` with the label `Matter Unknown
-Node`. **Restore the supplied label list** discards all current mappings and
-returns to that list. Removing a mapping stops the integration from restoring
-that device's label.
+Node titles start with their Matter identifier, for example `(@1:e) Frontdoor`.
+`🛡` means its label is guarded; `⚠` means the node is currently offline; and
+`❌` means it has been deleted from Matter Server, which also disables guarding.
+Opening the node’s pencil action shows its current Matter label and status, and
+lets you edit the guarded label or enable and disable guarding.
+
+The parent integration’s **Configure** screen shows the total number of node
+entries and the guarded, offline, and deleted counts. Its only setting is the
+check interval. Deleting a subentry stops Matter Label Guard from restoring that
+node's label.
 
 ## Troubleshooting
 

@@ -15,6 +15,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.event import async_track_time_interval
 
 from .const import (
+    CONF_AVAILABLE,
     CONF_DELETED,
     CONF_GUARDED,
     CONF_IDENTIFIER,
@@ -60,10 +61,16 @@ async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             entry,
             ConfigSubentry(
                 subentry_type=SUBENTRY_TYPE_NODE,
-                title=subentry_title(identifier, label, guarded=True, deleted=False),
+                title=subentry_title(identifier, label, guarded=True, deleted=False, available=True),
                 unique_id=identifier,
                 data=MappingProxyType(
-                    {CONF_IDENTIFIER: identifier, CONF_LABEL: label, CONF_GUARDED: True, CONF_DELETED: False}
+                    {
+                        CONF_IDENTIFIER: identifier,
+                        CONF_LABEL: label,
+                        CONF_GUARDED: True,
+                        CONF_DELETED: False,
+                        CONF_AVAILABLE: True,
+                    }
                 ),
             ),
         )
@@ -136,41 +143,50 @@ class MatterLabelGuard:
         }
         for identifier, node in nodes.items():
             if identifier not in existing:
+                data = {
+                    CONF_IDENTIFIER: identifier,
+                    CONF_LABEL: node.label,
+                    CONF_GUARDED: False,
+                    CONF_DELETED: False,
+                    CONF_AVAILABLE: node.available,
+                }
                 self.hass.config_entries.async_add_subentry(
                     self.entry,
                     ConfigSubentry(
                         subentry_type=SUBENTRY_TYPE_NODE,
-                        title=subentry_title(identifier, node.label, guarded=False, deleted=False),
-                        unique_id=identifier,
-                        data=MappingProxyType(
-                            {
-                                CONF_IDENTIFIER: identifier,
-                                CONF_LABEL: node.label,
-                                CONF_GUARDED: False,
-                                CONF_DELETED: False,
-                            }
+                        title=subentry_title(
+                            identifier, node.label, guarded=False, deleted=False, available=node.available
                         ),
+                        unique_id=identifier,
+                        data=MappingProxyType(data),
                     ),
                 )
-            elif existing[identifier].data.get(CONF_DELETED):
+            else:
                 sub = existing[identifier]
-                data = {**sub.data, CONF_DELETED: False}
+                data = {**sub.data, CONF_DELETED: False, CONF_AVAILABLE: node.available}
+                title = subentry_title(
+                    identifier,
+                    str(data[CONF_LABEL]),
+                    guarded=bool(data[CONF_GUARDED]),
+                    deleted=False,
+                    available=node.available,
+                )
+                if data != sub.data or title != sub.title:
+                    self.hass.config_entries.async_update_subentry(self.entry, sub, data=data, title=title)
+        for identifier, sub in existing.items():
+            if identifier not in nodes and not sub.data.get(CONF_DELETED):
+                data = {**sub.data, CONF_DELETED: True, CONF_GUARDED: False, CONF_AVAILABLE: False}
                 self.hass.config_entries.async_update_subentry(
                     self.entry,
                     sub,
                     data=data,
                     title=subentry_title(
-                        identifier, str(data[CONF_LABEL]), guarded=bool(data[CONF_GUARDED]), deleted=False
+                        str(identifier),
+                        str(data[CONF_LABEL]),
+                        guarded=False,
+                        deleted=True,
+                        available=False,
                     ),
-                )
-        for identifier, sub in existing.items():
-            if identifier not in nodes and not sub.data.get(CONF_DELETED):
-                data = {**sub.data, CONF_DELETED: True, CONF_GUARDED: False}
-                self.hass.config_entries.async_update_subentry(
-                    self.entry,
-                    sub,
-                    data=data,
-                    title=subentry_title(str(identifier), str(data[CONF_LABEL]), guarded=False, deleted=True),
                 )
 
     def _guarded_labels(self) -> dict[str, str]:
