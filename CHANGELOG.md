@@ -1,9 +1,23 @@
-![Matter Label Guard](brand/logo.svg)
+<img src="brand/logo.svg" alt="Matter Label Guard" style="max-width: 750px;">
 If you find this project useful, consider supporting its development:
 
 <a href="https://www.buymeacoffee.com/hunter.nl" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"></a>
 
 # Changelog
+## [v1.0.2](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.0.2)
+
+
+
+### :bug: Fixes
+
+- [Fix: show configured labels and square icon](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/7) ([#7](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/7))
+
+
+
+
+
+
+
 ## [v1.0.1](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.0.1)
 
 
@@ -14,6 +28,11 @@ If you find this project useful, consider supporting its development:
 
 
 
+
+
+### :question: Miscellaneous
+
+- [Chore(release): 1.0.1](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/6) ([#6](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/6))
 
 
 
