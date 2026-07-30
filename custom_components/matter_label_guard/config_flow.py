@@ -11,6 +11,7 @@ from homeassistant.core import callback
 from homeassistant.helpers.selector import TextSelector
 
 from .const import (
+    CONF_AVAILABLE,
     CONF_DELETED,
     CONF_GUARDED,
     CONF_IDENTIFIER,
@@ -92,13 +93,20 @@ class NodeLabelSubentryFlow(ConfigSubentryFlow):
         if user_input is not None:
             label = user_input[CONF_LABEL].strip()
             return self.async_create_entry(
-                title=subentry_title(self._identifier, label, guarded=user_input[CONF_GUARDED], deleted=False),
+                title=subentry_title(
+                    self._identifier,
+                    label,
+                    guarded=user_input[CONF_GUARDED],
+                    deleted=False,
+                    available=node.available,
+                ),
                 unique_id=self._identifier,
                 data={
                     CONF_IDENTIFIER: self._identifier,
                     CONF_LABEL: label,
                     CONF_GUARDED: user_input[CONF_GUARDED],
                     CONF_DELETED: False,
+                    CONF_AVAILABLE: node.available,
                 },
             )
         return self.async_show_form(
@@ -135,12 +143,14 @@ class NodeLabelSubentryFlow(ConfigSubentryFlow):
                     label,
                     guarded=user_input[CONF_GUARDED] and node is not None,
                     deleted=node is None,
+                    available=node.available if node else False,
                 ),
                 data={
                     CONF_IDENTIFIER: identifier,
                     CONF_LABEL: label,
                     CONF_GUARDED: user_input[CONF_GUARDED] and node is not None,
                     CONF_DELETED: node is None,
+                    CONF_AVAILABLE: node.available if node else False,
                 },
             )
         return self.async_show_form(
@@ -170,6 +180,7 @@ class NodeLabelSubentryFlow(ConfigSubentryFlow):
             **subentry.data,
             CONF_DELETED: node is None,
             CONF_GUARDED: bool(subentry.data.get(CONF_GUARDED)) and node is not None,
+            CONF_AVAILABLE: node.available if node else False,
         }
         self.hass.config_entries.async_update_subentry(
             entry=entry,
@@ -179,6 +190,7 @@ class NodeLabelSubentryFlow(ConfigSubentryFlow):
                 str(data[CONF_LABEL]),
                 guarded=bool(data[CONF_GUARDED]),
                 deleted=bool(data[CONF_DELETED]),
+                available=bool(data[CONF_AVAILABLE]),
             ),
             data=data,
         )

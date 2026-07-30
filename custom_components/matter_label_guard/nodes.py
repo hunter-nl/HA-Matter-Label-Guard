@@ -71,7 +71,10 @@ def fabric_index(entry: ConfigEntry) -> int:
     return 1
 
 
-def subentry_title(identifier: str, label: str, *, guarded: bool, deleted: bool) -> str:
-    """Return the user-visible state and label for a node subentry."""
-    state = "Deleted" if deleted else "Guarded" if guarded else "Not guarded"
-    return f"{state}: {label or identifier} ({identifier})"
+def subentry_title(identifier: str, label: str, *, guarded: bool, deleted: bool, available: bool) -> str:
+    """Return an identifier-first title with compact node-state indicators."""
+    indicators = ["❌"] if deleted else ["🛡"] if guarded else []
+    if not deleted and not available:
+        indicators.append("⚠")
+    suffix = f" {' '.join(indicators)}" if indicators else ""
+    return f"({identifier}){f' {label}' if label else ''}{suffix}"

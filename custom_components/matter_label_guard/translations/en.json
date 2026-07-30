@@ -30,7 +30,7 @@
   "config_subentries": {
     "node_label": {
       "title": "Matter node label",
-      "entry_type": "Matter node label",
+      "entry_type": "Matter node",
       "initiate_flow": {
         "user": "Add Matter node",
         "reconfigure": "Configure Matter node"
