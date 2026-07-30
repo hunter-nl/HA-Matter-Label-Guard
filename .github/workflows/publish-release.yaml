@@ -66,8 +66,8 @@ jobs:
 
       - name: Create release zip
         run: |
-          cd ${{ github.workspace }}
-          zip -r ${{ github.workspace }}/matter-label-guard.zip custom_components/${{ env.COMPONENT_NAME }}
+          cd custom_components/${{ env.COMPONENT_NAME }}
+          zip -r ${{ github.workspace }}/matter-label-guard.zip .
 
       - name: Extract custom release notes
         id: custom-release-notes
