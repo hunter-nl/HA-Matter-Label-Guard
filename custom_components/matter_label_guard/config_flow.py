@@ -62,13 +62,9 @@ class MatterLabelGuardOptionsFlow(config_entries.OptionsFlowWithReload):
     def _labels(self) -> dict[str, str]:
         return dict(self._settings().get(CONF_LABELS, DEFAULT_LABELS))
 
-    def _labels_summary(self) -> str:
-        """Return the configured labels for the options-menu description."""
-        return "\n".join(f"{identifier} → {label}" for identifier, label in sorted(self._labels().items()))
-
     @callback
     def _identifier_selector(self) -> Any:
-        return SelectSelector(SelectSelectorConfig(options=sorted(self._labels())))
+        return SelectSelector(SelectSelectorConfig(options=sorted(self._labels(), key=_identifier_sort_key)))
 
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         """Show the settings and label-management menu."""
@@ -166,6 +162,13 @@ class MatterLabelGuardOptionsFlow(config_entries.OptionsFlowWithReload):
             return self.async_create_entry(title="", data={**self._settings(), CONF_LABELS: dict(DEFAULT_LABELS)})
         return self.async_show_form(step_id="reset_labels")
 
+    def _labels_summary(self) -> str:
+        """Return the configured labels for the options-menu description."""
+        return "\n".join(
+            f"{identifier} → {label}"
+            for identifier, label in sorted(self._labels().items(), key=lambda item: _identifier_sort_key(item[0]))
+        )
+
 
 def _valid_identifier(identifier: str) -> bool:
     """Validate the Matter Server @fabric:node hexadecimal notation."""
@@ -174,3 +177,9 @@ def _valid_identifier(identifier: str) -> bool:
         return identifier.startswith("@") and bool(fabric) and int(fabric, 16) >= 0 and int(node, 16) >= 0
     except ValueError:
         return False
+
+
+def _identifier_sort_key(identifier: str) -> tuple[int, int]:
+    """Sort Matter Server identifiers by fabric and node hexadecimal values."""
+    fabric, node = identifier.removeprefix("@").split(":", maxsplit=1)
+    return int(fabric, 16), int(node, 16)
