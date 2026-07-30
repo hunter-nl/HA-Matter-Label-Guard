@@ -94,10 +94,11 @@ each. Open a node’s settings to see its current Matter label, choose the label
 to restore, and enable **Guard this label**. An unguarded node is kept in the
 list but is never changed.
 
-Node titles start with their Matter identifier, for example `(@1:e) Achterdeur`.
+Node titles start with their Matter identifier, for example `(@1:e) Frontdoor`.
 `🛡` means its label is guarded; `⚠` means the node is currently offline; and
 `❌` means it has been deleted from Matter Server, which also disables guarding.
-Opening the node’s pencil action reads its current Matter label and status.
+Opening the node’s pencil action shows its current Matter label and status, and
+lets you edit the guarded label or enable and disable guarding.
 
 The parent integration’s **Configure** screen shows the total number of node
 entries and the guarded, offline, and deleted counts. Its only setting is the
