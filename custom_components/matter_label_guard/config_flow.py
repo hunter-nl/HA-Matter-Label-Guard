@@ -6,19 +6,21 @@ from typing import Any
 
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.config_entries import ConfigFlowResult
+from homeassistant.config_entries import ConfigEntry, ConfigFlowResult, ConfigSubentryFlow, SubentryFlowResult
 from homeassistant.core import callback
-from homeassistant.helpers.selector import (
-    SelectSelector,
-    SelectSelectorConfig,
-    TextSelector,
+from homeassistant.helpers.selector import TextSelector
+
+from .const import (
+    CONF_DELETED,
+    CONF_GUARDED,
+    CONF_IDENTIFIER,
+    CONF_INTERVAL_MINUTES,
+    CONF_LABEL,
+    DEFAULT_INTERVAL_MINUTES,
+    DOMAIN,
+    SUBENTRY_TYPE_NODE,
 )
-
-from .const import CONF_INTERVAL_MINUTES, CONF_LABELS, DEFAULT_INTERVAL_MINUTES, DOMAIN
-from .labels import DEFAULT_LABELS
-
-CONF_IDENTIFIER = "identifier"
-CONF_LABEL = "label"
+from .nodes import discovered_nodes, fabric_index, matter_client_available, subentry_title
 
 
 def _interval_schema(value: int) -> vol.Schema:
@@ -33,14 +35,14 @@ def _interval_schema(value: int) -> vol.Schema:
 class MatterLabelGuardConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Set up Matter Label Guard."""
 
-    VERSION = 1
+    VERSION = 2
 
     async def async_step_user(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
-        """Create the entry with the supplied labels."""
+        """Create the entry with the supplied check interval."""
         if user_input is not None:
             return self.async_create_entry(
                 title="Matter Label Guard",
-                data={**user_input, CONF_LABELS: dict(DEFAULT_LABELS)},
+                data=user_input,
             )
         return self.async_show_form(step_id="user", data_schema=_interval_schema(DEFAULT_INTERVAL_MINUTES))
 
@@ -52,32 +54,170 @@ class MatterLabelGuardConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Return the editable settings flow."""
         return MatterLabelGuardOptionsFlow()
 
+    @classmethod
+    @callback
+    def async_get_supported_subentry_types(cls, config_entry: ConfigEntry) -> dict[str, type[ConfigSubentryFlow]]:
+        """Expose one editable subentry for each Matter node."""
+        return {SUBENTRY_TYPE_NODE: NodeLabelSubentryFlow}
+
+
+class NodeLabelSubentryFlow(ConfigSubentryFlow):
+    """Configure whether a discovered Matter node label is guarded."""
+
+    async def async_step_user(self, user_input: dict[str, Any] | None = None) -> SubentryFlowResult:
+        """Choose a currently discovered node."""
+        entry = self._get_entry()
+        nodes = discovered_nodes(self.hass, fabric_index(entry))
+        configured = {subentry.unique_id for subentry in entry.subentries.values()}
+        choices = {
+            identifier: f"{identifier} — {node.label or 'No label'}"
+            for identifier, node in nodes.items()
+            if identifier not in configured
+        }
+        if not choices:
+            return self.async_abort(reason="no_nodes")
+        if user_input is not None:
+            self._identifier = user_input[CONF_IDENTIFIER]
+            return await self.async_step_configure()
+        return self.async_show_form(
+            step_id="user", data_schema=vol.Schema({vol.Required(CONF_IDENTIFIER): vol.In(choices)})
+        )
+
+    async def async_step_configure(self, user_input: dict[str, Any] | None = None) -> SubentryFlowResult:
+        """Set the proposed current label and guarding state."""
+        entry = self._get_entry()
+        node = discovered_nodes(self.hass, fabric_index(entry)).get(self._identifier)
+        if node is None:
+            return self.async_abort(reason="node_not_found")
+        if user_input is not None:
+            label = user_input[CONF_LABEL].strip()
+            return self.async_create_entry(
+                title=subentry_title(self._identifier, label, guarded=user_input[CONF_GUARDED], deleted=False),
+                unique_id=self._identifier,
+                data={
+                    CONF_IDENTIFIER: self._identifier,
+                    CONF_LABEL: label,
+                    CONF_GUARDED: user_input[CONF_GUARDED],
+                    CONF_DELETED: False,
+                },
+            )
+        return self.async_show_form(
+            step_id="configure",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(CONF_LABEL, default=node.label): TextSelector(),
+                    vol.Required(CONF_GUARDED, default=False): bool,
+                }
+            ),
+            description_placeholders={
+                "current_label": node.label,
+                "status": "online" if node.available else "offline",
+            },
+        )
+
+    async def async_step_reconfigure(self, user_input: dict[str, Any] | None = None) -> SubentryFlowResult:
+        """Show label settings and the refresh action for a node subentry."""
+        return self.async_show_menu(step_id="reconfigure", menu_options=["settings", "refresh"])
+
+    async def async_step_settings(self, user_input: dict[str, Any] | None = None) -> SubentryFlowResult:
+        """Update an existing node-label subentry."""
+        entry = self._get_entry()
+        subentry = self._get_reconfigure_subentry()
+        identifier = subentry.data[CONF_IDENTIFIER]
+        node = discovered_nodes(self.hass, fabric_index(entry)).get(identifier)
+        if user_input is not None:
+            label = user_input[CONF_LABEL].strip()
+            return self.async_update_reload_and_abort(
+                entry,
+                subentry,
+                title=subentry_title(
+                    identifier,
+                    label,
+                    guarded=user_input[CONF_GUARDED] and node is not None,
+                    deleted=node is None,
+                ),
+                data={
+                    CONF_IDENTIFIER: identifier,
+                    CONF_LABEL: label,
+                    CONF_GUARDED: user_input[CONF_GUARDED] and node is not None,
+                    CONF_DELETED: node is None,
+                },
+            )
+        return self.async_show_form(
+            step_id="settings",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(CONF_LABEL, default=subentry.data[CONF_LABEL]): TextSelector(),
+                    vol.Required(CONF_GUARDED, default=subentry.data[CONF_GUARDED] and node is not None): bool,
+                }
+            ),
+            description_placeholders={
+                "current_label": node.label if node else "",
+                "status": "online" if node and node.available else "deleted" if node is None else "offline",
+            },
+        )
+
+    async def async_step_refresh(self, user_input: dict[str, Any] | None = None) -> SubentryFlowResult:
+        """Refresh only this node's retained/deleted and online/offline state."""
+        entry = self._get_entry()
+        subentry = self._get_reconfigure_subentry()
+        identifier = subentry.data[CONF_IDENTIFIER]
+        if not matter_client_available(self.hass):
+            return self.async_abort(reason="matter_unavailable")
+
+        node = discovered_nodes(self.hass, fabric_index(entry)).get(identifier)
+        data = {
+            **subentry.data,
+            CONF_DELETED: node is None,
+            CONF_GUARDED: bool(subentry.data.get(CONF_GUARDED)) and node is not None,
+        }
+        self.hass.config_entries.async_update_subentry(
+            entry=entry,
+            subentry=subentry,
+            title=subentry_title(
+                identifier,
+                str(data[CONF_LABEL]),
+                guarded=bool(data[CONF_GUARDED]),
+                deleted=bool(data[CONF_DELETED]),
+            ),
+            data=data,
+        )
+        return self.async_abort(
+            reason="refresh_successful",
+            description_placeholders={
+                "status": "deleted" if node is None else "online" if node.available else "offline"
+            },
+        )
+
 
 class MatterLabelGuardOptionsFlow(config_entries.OptionsFlowWithReload):
-    """Provide label management forms."""
+    """Provide the parent check-interval and node-status summary."""
 
     def _settings(self) -> dict[str, Any]:
         return {**self.config_entry.data, **self.config_entry.options}
 
-    def _labels(self) -> dict[str, str]:
-        return dict(self._settings().get(CONF_LABELS, DEFAULT_LABELS))
-
-    @callback
-    def _identifier_selector(self) -> Any:
-        return SelectSelector(SelectSelectorConfig(options=sorted(self._labels(), key=_identifier_sort_key)))
-
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
-        """Show the settings and label-management menu."""
+        """Show the parent settings summary."""
+        entry = self.config_entry
+        nodes = discovered_nodes(self.hass, fabric_index(entry)) if matter_client_available(self.hass) else {}
+        subentries = [
+            subentry for subentry in entry.subentries.values() if subentry.subentry_type == SUBENTRY_TYPE_NODE
+        ]
+        guarded = sum(
+            bool(subentry.data.get(CONF_GUARDED)) and not subentry.data.get(CONF_DELETED) for subentry in subentries
+        )
+        deleted = sum(bool(subentry.data.get(CONF_DELETED)) for subentry in subentries)
+        configured = {subentry.unique_id for subentry in subentries}
+        offline = sum(not node.available for identifier, node in nodes.items() if identifier in configured)
         return self.async_show_menu(
             step_id="init",
-            menu_options=[
-                "settings",
-                "add_label",
-                "edit_label",
-                "remove_label",
-                "reset_labels",
-            ],
-            description_placeholders={"labels": self._labels_summary()},
+            menu_options=["settings"],
+            description_placeholders={
+                "nodes": str(len(subentries)),
+                "guarded": str(guarded),
+                "offline": str(offline),
+                "deleted": str(deleted),
+            },
         )
 
     async def async_step_settings(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
@@ -88,98 +228,3 @@ class MatterLabelGuardOptionsFlow(config_entries.OptionsFlowWithReload):
             step_id="settings",
             data_schema=_interval_schema(self._settings()[CONF_INTERVAL_MINUTES]),
         )
-
-    async def async_step_add_label(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
-        """Add a node label."""
-        errors: dict[str, str] = {}
-        if user_input is not None:
-            identifier = user_input[CONF_IDENTIFIER].strip().lower()
-            if not _valid_identifier(identifier):
-                errors[CONF_IDENTIFIER] = "invalid_identifier"
-            elif identifier in self._labels():
-                errors[CONF_IDENTIFIER] = "identifier_exists"
-            elif not user_input[CONF_LABEL].strip():
-                errors[CONF_LABEL] = "invalid_label"
-            else:
-                labels = self._labels()
-                labels[identifier] = user_input[CONF_LABEL].strip()
-                return self.async_create_entry(title="", data={**self._settings(), CONF_LABELS: labels})
-        return self.async_show_form(
-            step_id="add_label",
-            data_schema=vol.Schema(
-                {
-                    vol.Required(CONF_IDENTIFIER): TextSelector(),
-                    vol.Required(CONF_LABEL): TextSelector(),
-                }
-            ),
-            errors=errors,
-        )
-
-    async def async_step_edit_label(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
-        """Choose the node whose label should change."""
-        if user_input is not None:
-            self._selected_identifier = user_input[CONF_IDENTIFIER]
-            return await self.async_step_edit_value()
-        return self.async_show_form(
-            step_id="edit_label",
-            data_schema=vol.Schema({vol.Required(CONF_IDENTIFIER): self._identifier_selector()}),
-        )
-
-    async def async_step_edit_value(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
-        """Edit the selected node's label."""
-        identifier = self._selected_identifier
-        if user_input is not None:
-            if user_input[CONF_LABEL].strip():
-                labels = self._labels()
-                labels[identifier] = user_input[CONF_LABEL].strip()
-                return self.async_create_entry(title="", data={**self._settings(), CONF_LABELS: labels})
-            return self.async_show_form(
-                step_id="edit_value",
-                data_schema=vol.Schema({vol.Required(CONF_LABEL, default=self._labels()[identifier]): TextSelector()}),
-                errors={CONF_LABEL: "invalid_label"},
-                description_placeholders={"identifier": identifier},
-            )
-        return self.async_show_form(
-            step_id="edit_value",
-            data_schema=vol.Schema({vol.Required(CONF_LABEL, default=self._labels()[identifier]): TextSelector()}),
-            description_placeholders={"identifier": identifier},
-        )
-
-    async def async_step_remove_label(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
-        """Remove one node label."""
-        if user_input is not None:
-            labels = self._labels()
-            labels.pop(user_input[CONF_IDENTIFIER], None)
-            return self.async_create_entry(title="", data={**self._settings(), CONF_LABELS: labels})
-        return self.async_show_form(
-            step_id="remove_label",
-            data_schema=vol.Schema({vol.Required(CONF_IDENTIFIER): self._identifier_selector()}),
-        )
-
-    async def async_step_reset_labels(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
-        """Offer a confirmation before restoring the supplied list."""
-        if user_input is not None:
-            return self.async_create_entry(title="", data={**self._settings(), CONF_LABELS: dict(DEFAULT_LABELS)})
-        return self.async_show_form(step_id="reset_labels")
-
-    def _labels_summary(self) -> str:
-        """Return the configured labels for the options-menu description."""
-        return "\n".join(
-            f"{identifier} → {label}"
-            for identifier, label in sorted(self._labels().items(), key=lambda item: _identifier_sort_key(item[0]))
-        )
-
-
-def _valid_identifier(identifier: str) -> bool:
-    """Validate the Matter Server @fabric:node hexadecimal notation."""
-    try:
-        fabric, node = identifier.removeprefix("@").split(":", maxsplit=1)
-        return identifier.startswith("@") and bool(fabric) and int(fabric, 16) >= 0 and int(node, 16) >= 0
-    except ValueError:
-        return False
-
-
-def _identifier_sort_key(identifier: str) -> tuple[int, int]:
-    """Sort Matter Server identifiers by fabric and node hexadecimal values."""
-    fabric, node = identifier.removeprefix("@").split(":", maxsplit=1)
-    return int(fabric, 16), int(node, 16)

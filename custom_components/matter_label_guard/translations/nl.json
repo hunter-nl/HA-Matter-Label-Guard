@@ -1,74 +1,72 @@
 {
-   "config": {
-     "step": {
-       "user": {
-         "title": "Matter Label Guard",
-         "description": "Herstelt een Matter-knooppuntlabel alleen wanneer het apparaat een leeg label rapporteert. Labels kunnen worden beheerd in de configuratie.",
-         "data": {
-           "interval_minutes": "Controleerinterval (minuten)"
-         }
-       }
-     },
-     "error": {
-       "invalid_identifier": "Gebruik het Matter Server-knooppuntidentificatieformaat, bijvoorbeeld @1:2a.",
-       "identifier_exists": "Dit Matter-knooppunt is al aanwezig in de labellijst. Kies Bewerk label.",
-       "invalid_label": "Voer een label in."
-     }
-   },
-   "options": {
-     "step": {
-       "init": {
-         "title": "Matter Label Guard",
-         "description": "Geconfigureerde knooppuntlabels:\n{labels}\n\nBeheer uw Matter-knooppuntlabels of het controleerinterval. De integratie wordt opnieuw geladen na het opslaan.",
-         "menu_options": {
-           "settings": "Controleerinterval",
-           "add_label": "Knooppuntlabel toevoegen",
-           "edit_label": "Knooppuntlabel bewerken",
-           "remove_label": "Knooppuntlabel verwijderen",
-           "reset_labels": "Standaardlabellijst herstellen"
-         }
-       },
-       "settings": {
-         "title": "Controleerinterval",
-         "data": {
-           "interval_minutes": "Controleerinterval (minuten)"
-         }
-       },
-       "add_label": {
-         "title": "Knooppuntlabel toevoegen",
-         "data": {
-           "identifier": "Matter-knooppuntidentificatie",
-           "label": "Label"
-         }
-       },
-       "edit_label": {
-         "title": "Kies een knooppuntlabel",
-         "data": {
-           "identifier": "Matter-knooppuntidentificatie"
-         }
-       },
-       "edit_value": {
-         "title": "Bewerk {identifier}",
-         "data": {
-           "label": "Label"
-         }
-       },
-       "remove_label": {
-         "title": "Knooppuntlabel verwijderen",
-         "description": "Het verwijderen van deze entry stopt het herstellen van het label voor dit knooppunt.",
-         "data": {
-           "identifier": "Matter-knooppuntidentificatie"
-         }
-       },
-      "reset_labels": {
-        "title": "Standaardlabellijst herstellen",
-        "description": "Dit verwijdert de huidige lijst en herstelt de standaardlabels."
+  "config": {
+    "step": {
+      "user": {
+        "title": "Matter Label Guard",
+        "description": "Herstelt een Matter-knooppuntlabel alleen wanneer het apparaat een leeg label rapporteert. Gedetecteerde knooppunten worden als afzonderlijke configuratie-items beheerd.",
+        "data": {
+          "interval_minutes": "Controleerinterval (minuten)"
+        }
       }
-     },
-     "error": {
-       "invalid_identifier": "Gebruik het Matter Server-identificatieformaat, bijvoorbeeld @1:2a.",
-       "identifier_exists": "Dit Matter-knooppunt is al aanwezig in de labellijst. Kies Bewerk label.",
-       "invalid_label": "Voer een label in."
-     }
-   }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Matter Label Guard",
+        "description": "{nodes} knooppuntitems · {guarded} bewaakt · {offline} offline · {deleted} verwijderd",
+        "menu_options": {
+          "settings": "Controleerinterval"
+        }
+      },
+      "settings": {
+        "title": "Controleerinterval",
+        "data": {
+          "interval_minutes": "Controleerinterval (minuten)"
+        }
+      }
+    }
+  },
+  "config_subentries": {
+    "node_label": {
+      "title": "Matter-knooppuntlabel",
+      "step": {
+        "user": {
+          "title": "Matter-knooppunt toevoegen",
+          "data": {
+            "identifier": "Matter-knooppunt"
+          }
+        },
+        "configure": {
+          "title": "Matter-knooppunt configureren",
+          "description": "Huidig Matter-label: {current_label}\nStatus: {status}",
+          "data": {
+            "label": "Te herstellen label",
+            "guarded": "Dit label bewaken"
+          }
+        },
+        "reconfigure": {
+          "title": "Matter-knooppuntlabel",
+          "menu_options": {
+            "settings": "Labelinstellingen",
+            "refresh": "Knooppuntstatus vernieuwen"
+          }
+        },
+        "settings": {
+          "title": "Matter-knooppuntlabel",
+          "description": "Huidig Matter-label: {current_label}\nStatus: {status}",
+          "data": {
+            "label": "Te herstellen label",
+            "guarded": "Dit label bewaken"
+          }
+        }
+      },
+      "abort": {
+        "no_nodes": "Alle momenteel gedetecteerde Matter-knooppunten hebben al een item.",
+        "node_not_found": "Dit Matter-knooppunt wordt niet meer door Matter Server bewaard.",
+        "matter_unavailable": "De Matter-integratie is momenteel niet geladen.",
+        "refresh_successful": "Knooppuntstatus vernieuwd: {status}."
+      }
+    }
+  }
 }
