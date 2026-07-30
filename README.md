@@ -1,6 +1,6 @@
 # Matter Label Guard
 
-![Matter Label Guard](brand/logo.svg)
+<img src="brand/logo.svg" alt="Matter Label Guard" style="max-width: 750px;">
 
 [![Release][release-badge]][release-url]
 [![Validate][validate-badge]][validate-url]
