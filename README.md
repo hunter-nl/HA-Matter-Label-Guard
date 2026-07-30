@@ -76,8 +76,8 @@ not need a Matter Server URL, token, or a second WebSocket client.
 HACS checks this custom repository for published releases and shows an available
 update in **Settings → Updates** (or as **Pending update** in HACS). Before
 upgrading, create a Home Assistant backup and read the release notes. Install
-the update, then restart Home Assistant. Your existing integration configuration
-and label mappings are retained.
+the update (by redownload), then restart Home Assistant. Your existing integration
+configuration and label mappings are retained.
 
 ### Manual
 
