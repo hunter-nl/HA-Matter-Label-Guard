@@ -19,7 +19,7 @@
      "step": {
        "init": {
          "title": "Matter Label Guard",
-         "description": "Beheer uw Matter-knooppuntlabels of het controleerinterval. De integratie wordt opnieuw geladen na het opslaan.",
+         "description": "Geconfigureerde knooppuntlabels:\n{labels}\n\nBeheer uw Matter-knooppuntlabels of het controleerinterval. De integratie wordt opnieuw geladen na het opslaan.",
          "menu_options": {
            "settings": "Controleerinterval",
            "add_label": "Knooppuntlabel toevoegen",

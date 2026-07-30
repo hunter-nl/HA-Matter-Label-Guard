@@ -19,7 +19,7 @@
     "step": {
       "init": {
         "title": "Matter Label Guard",
-        "description": "Manage your Matter node labels or the check interval. The integration reloads after saving.",
+        "description": "Configured node labels:\n{labels}\n\nManage your Matter node labels or the check interval. The integration reloads after saving.",
         "menu_options": {
           "settings": "Check interval",
           "add_label": "Add a node label",

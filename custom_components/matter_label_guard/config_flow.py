@@ -62,6 +62,10 @@ class MatterLabelGuardOptionsFlow(config_entries.OptionsFlowWithReload):
     def _labels(self) -> dict[str, str]:
         return dict(self._settings().get(CONF_LABELS, DEFAULT_LABELS))
 
+    def _labels_summary(self) -> str:
+        """Return the configured labels for the options-menu description."""
+        return "\n".join(f"{identifier} → {label}" for identifier, label in sorted(self._labels().items()))
+
     @callback
     def _identifier_selector(self) -> Any:
         return SelectSelector(SelectSelectorConfig(options=sorted(self._labels())))
@@ -77,6 +81,7 @@ class MatterLabelGuardOptionsFlow(config_entries.OptionsFlowWithReload):
                 "remove_label",
                 "reset_labels",
             ],
+            description_placeholders={"labels": self._labels_summary()},
         )
 
     async def async_step_settings(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
