@@ -45,7 +45,7 @@ Use `fix/`, `feature/`, `docs/`, or `chore/` as appropriate.
 
    In VS Code, use **Publish Branch** for this first push. After publishing, **Sync Changes** is safe and targets the branch instead of `main`.
 
-3. Create a pull request with `main` as the base branch. Summarize the change and validation performed.
+3. Create a pull request with `main` as the base branch. Summarize the change and validation performed. Treat terminal output as private: never include test-session output, absolute local paths, usernames, or other machine-specific details in PR descriptions or comments. State only concise validation results.
 4. Write the pull request description as actual Markdown. Use real line breaks and Markdown lists; never send literal `\\n` escape sequences to GitHub.
 5. Enable GitHub auto-merge with an allowed merge method after creating the pull request. It must still wait for the required checks and review; do not bypass them.
 6. Do not bypass required checks, reviews, branch rules, or deployment gates.
