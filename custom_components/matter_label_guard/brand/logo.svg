@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1200 512"
+     role="img"
+     aria-labelledby="title">
+
+  <title>Matter Label Guard</title>
+
+  <rect width="1200"
+        height="512"
+        rx="72"
+        fill="#103a43"/>
+
+  <!-- ====================================================== -->
+  <!-- Icon -->
+  <!-- ====================================================== -->
+
+  <g transform="translate(48 35)">
+
+    <!-- Shield -->
+    <path d="
+      M208 18
+      L376 122
+      L376 310
+      L208 412
+      L40 310
+      L40 122
+      Z"
+      fill="#137a83"/>
+
+    <!-- Matter network -->
+    <g fill="none"
+       stroke="#c6f3ee"
+       stroke-width="16"
+       stroke-linecap="round"
+       stroke-linejoin="round">
+
+      <path d="
+        M208 76
+        L330 146
+        L330 286
+        L208 356
+        L86 286
+        L86 146
+        Z"/>
+    </g>
+
+    <!-- Nodes -->
+    <g fill="#f4c95d">
+
+      <circle cx="208" cy="76" r="20"/>
+      <circle cx="330" cy="146" r="20"/>
+      <circle cx="330" cy="286" r="20"/>
+      <circle cx="208" cy="356" r="20"/>
+      <circle cx="86"  cy="286" r="20"/>
+      <circle cx="86"  cy="146" r="20"/>
+
+    </g>
+
+    <!-- Chat bubble -->
+    <g transform="translate(0,-6)">
+
+      <path d="
+        M170 182
+        h76
+        c26 0 46 20 46 46
+        s-20 46-46 46
+        h-22
+        l-28 28
+        v-28
+        h-26
+        c-26 0-46-20-46-46
+        s20-46 46-46
+        Z"
+        fill="#ffffff"/>
+
+      <path d="M188 221h58
+               M188 245h38"
+            stroke="#137a83"
+            stroke-width="12"
+            stroke-linecap="round"/>
+
+    </g>
+
+  </g>
+
+  <!-- ====================================================== -->
+  <!-- Text -->
+  <!-- ====================================================== -->
+
+  <text x="465"
+        y="245"
+        fill="#ffffff"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="76"
+        font-weight="700">
+    Matter Label Guard
+  </text>
+
+  <text x="465"
+        y="320"
+        fill="#c6f3ee"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="34">
+    Restore missing Matter node labels
+  </text>
+
+</svg>

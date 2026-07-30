@@ -1,0 +1,8 @@
+{
+  "name": "Matter Label Guard",
+  "content_in_root": false,
+  "filename": "matter-label-guard.zip",
+  "zip_release": true,
+  "hide_default_branch": true,
+  "homeassistant": "2026.7.0"
+}

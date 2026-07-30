@@ -1,0 +1,74 @@
+{
+   "config": {
+     "step": {
+       "user": {
+         "title": "Matter Label Guard",
+         "description": "Herstelt een Matter-knooppuntlabel alleen wanneer het apparaat een leeg label rapporteert. Labels kunnen worden beheerd in de configuratie.",
+         "data": {
+           "interval_minutes": "Controleerinterval (minuten)"
+         }
+       }
+     },
+     "error": {
+       "invalid_identifier": "Gebruik het Matter Server-knooppuntidentificatieformaat, bijvoorbeeld @1:2a.",
+       "identifier_exists": "Dit Matter-knooppunt is al aanwezig in de labellijst. Kies Bewerk label.",
+       "invalid_label": "Voer een label in."
+     }
+   },
+   "options": {
+     "step": {
+       "init": {
+         "title": "Matter Label Guard",
+         "description": "Beheer uw Matter-knooppuntlabels of het controleerinterval. De integratie wordt opnieuw geladen na het opslaan.",
+         "menu_options": {
+           "settings": "Controleerinterval",
+           "add_label": "Knooppuntlabel toevoegen",
+           "edit_label": "Knooppuntlabel bewerken",
+           "remove_label": "Knooppuntlabel verwijderen",
+           "reset_labels": "Standaardlabellijst herstellen"
+         }
+       },
+       "settings": {
+         "title": "Controleerinterval",
+         "data": {
+           "interval_minutes": "Controleerinterval (minuten)"
+         }
+       },
+       "add_label": {
+         "title": "Knooppuntlabel toevoegen",
+         "data": {
+           "identifier": "Matter-knooppuntidentificatie",
+           "label": "Label"
+         }
+       },
+       "edit_label": {
+         "title": "Kies een knooppuntlabel",
+         "data": {
+           "identifier": "Matter-knooppuntidentificatie"
+         }
+       },
+       "edit_value": {
+         "title": "Bewerk {identifier}",
+         "data": {
+           "label": "Label"
+         }
+       },
+       "remove_label": {
+         "title": "Knooppuntlabel verwijderen",
+         "description": "Het verwijderen van deze entry stopt het herstellen van het label voor dit knooppunt.",
+         "data": {
+           "identifier": "Matter-knooppuntidentificatie"
+         }
+       },
+      "reset_labels": {
+        "title": "Standaardlabellijst herstellen",
+        "description": "Dit verwijdert de huidige lijst en herstelt de standaardlabels."
+      }
+     },
+     "error": {
+       "invalid_identifier": "Gebruik het Matter Server-identificatieformaat, bijvoorbeeld @1:2a.",
+       "identifier_exists": "Dit Matter-knooppunt is al aanwezig in de labellijst. Kies Bewerk label.",
+       "invalid_label": "Voer een label in."
+     }
+   }
+}
