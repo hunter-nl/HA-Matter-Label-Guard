@@ -7,6 +7,8 @@ on:
       - master
   pull_request:
     types: [opened, reopened, synchronize, labeled, unlabeled]
+  release:
+    types: [published]
 
 # Permissions for default token (secrets.GITHUB_TOKEN)
 permissions:
