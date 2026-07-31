@@ -6,13 +6,14 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from datetime import timedelta
+from datetime import datetime, timedelta
 from types import MappingProxyType
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry, ConfigSubentry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.event import async_track_time_interval
+from homeassistant.util import dt as dt_util
 
 from .const import (
     CONF_AVAILABLE,
@@ -91,6 +92,7 @@ class MatterLabelGuard:
         settings: dict[str, Any] = {**entry.data, **entry.options}
         self.interval_minutes = int(settings[CONF_INTERVAL_MINUTES])
         self.entry = entry
+        self.last_nodes_refreshed: datetime | None = None
         self._restore_lock = asyncio.Lock()
 
     async def async_restore_missing_labels(self, *_: Any) -> None:
@@ -190,6 +192,7 @@ class MatterLabelGuard:
                         available=False,
                     ),
                 )
+        self.last_nodes_refreshed = dt_util.utcnow()
 
     def _guarded_labels(self) -> dict[str, str]:
         """Return only extant nodes whose label protection is enabled."""
