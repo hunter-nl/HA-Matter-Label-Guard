@@ -4,6 +4,20 @@ If you find this project useful, consider supporting its development:
 <a href="https://www.buymeacoffee.com/hunter.nl" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"></a>
 
 # Changelog
+## [v1.1.2](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.1.2)
+
+
+
+### :sparkles: Features
+
+- [Fix: sort Matter node subentries by ID](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/19) ([#19](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/19))
+
+
+
+
+
+
+
 ## [v1.1.1](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.1.1)
 
 
