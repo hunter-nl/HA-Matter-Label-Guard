@@ -118,16 +118,18 @@ class MatterLabelGuard:
 
     async def _check_client_label(self, client: Any, identifier: str, label: str, semaphore: asyncio.Semaphore) -> None:
         """Restore one label, limiting device wake-up/read time."""
-        if self._node_id(identifier) is None:
+        parsed_identifier = self._node_id(identifier)
+        if parsed_identifier is None:
             LOGGER.warning("Ignoring invalid Matter node identifier: %s", identifier)
             return
+        _, node_id = parsed_identifier
         try:
             async with semaphore, asyncio.timeout(15):
-                values = await client.read_attribute(identifier, NODE_LABEL_PATH)
+                values = await client.read_attribute(node_id, NODE_LABEL_PATH)
                 current_label = values.get(NODE_LABEL_PATH)
                 if isinstance(current_label, str) and current_label.strip():
                     return
-                await client.write_attribute(identifier, NODE_LABEL_PATH, label)
+                await client.write_attribute(node_id, NODE_LABEL_PATH, label)
                 LOGGER.info("Restored Matter node label %r on %s", label, identifier)
         except Exception as err:  # A sleepy or temporarily-offline node is retried later.
             LOGGER.debug("Could not check Matter node %s: %s", identifier, err)
