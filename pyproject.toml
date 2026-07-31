@@ -1,6 +1,6 @@
 [project]
 name = "matter-label-guard"
-version = "1.1.2"
+version = "1.2.0"
 description = "Home Assistant custom integration to protect Matter node labels"
 readme = "README.md"
 requires-python = ">=3.14.2"
