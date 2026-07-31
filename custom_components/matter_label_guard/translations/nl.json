@@ -14,8 +14,9 @@
     "step": {
       "init": {
         "title": "Matter Label Guard",
-        "description": "{nodes} knooppuntitems · {guarded} bewaakt · {offline} offline · {deleted} verwijderd",
+        "description": "{nodes} knooppuntitems · {guarded} bewaakt · {offline} offline · {deleted} verwijderd\nLaatst ververst: {last_refreshed}",
         "menu_options": {
+          "refresh_nodes": "Matter-knooppuntenlijst vernieuwen",
           "settings": "Controleerinterval"
         }
       },
@@ -25,6 +26,10 @@
           "interval_minutes": "Controleerinterval (minuten)"
         }
       }
+    },
+    "abort": {
+      "matter_unavailable": "De Matter-integratie is momenteel niet geladen.",
+      "nodes_refreshed": "Matter-knooppuntenlijst ververst om {last_refreshed}."
     }
   },
   "config_subentries": {
@@ -62,7 +67,8 @@
       "abort": {
         "no_nodes": "Alle momenteel gedetecteerde Matter-knooppunten hebben al een item.",
         "node_not_found": "Dit Matter-knooppunt wordt niet meer door Matter Server bewaard.",
-        "matter_unavailable": "De Matter-integratie is momenteel niet geladen."
+        "matter_unavailable": "De Matter-integratie is momenteel niet geladen.",
+        "reconfigure_successful": "Matter-knooppunt bijgewerkt."
       }
     }
   }

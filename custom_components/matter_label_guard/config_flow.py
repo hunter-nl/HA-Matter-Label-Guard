@@ -9,6 +9,7 @@ from homeassistant import config_entries
 from homeassistant.config_entries import ConfigEntry, ConfigFlowResult, ConfigSubentryFlow, SubentryFlowResult
 from homeassistant.core import callback
 from homeassistant.helpers.selector import TextSelector
+from homeassistant.util import dt as dt_util
 
 from .const import (
     CONF_AVAILABLE,
@@ -174,10 +175,16 @@ class MatterLabelGuardOptionsFlow(config_entries.OptionsFlowWithReload):
     def _settings(self) -> dict[str, Any]:
         return {**self.config_entry.data, **self.config_entry.options}
 
+    def _last_refreshed(self) -> str:
+        """Return the local time the Matter node list was last synchronized."""
+        refreshed = getattr(self.config_entry.runtime_data, "last_nodes_refreshed", None)
+        if refreshed is None:
+            return "—"
+        return dt_util.as_local(refreshed).strftime("%Y-%m-%d %H:%M:%S")
+
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         """Show the parent settings summary."""
         entry = self.config_entry
-        nodes = discovered_nodes(self.hass, fabric_index(entry)) if matter_client_available(self.hass) else {}
         subentries = [
             subentry for subentry in entry.subentries.values() if subentry.subentry_type == SUBENTRY_TYPE_NODE
         ]
@@ -186,16 +193,29 @@ class MatterLabelGuardOptionsFlow(config_entries.OptionsFlowWithReload):
         )
         deleted = sum(bool(subentry.data.get(CONF_DELETED)) for subentry in subentries)
         configured = {subentry.unique_id for subentry in subentries}
-        offline = sum(not node.available for identifier, node in nodes.items() if identifier in configured)
+        offline = sum(
+            not subentry.data.get(CONF_AVAILABLE) for subentry in subentries if subentry.unique_id in configured
+        )
         return self.async_show_menu(
             step_id="init",
-            menu_options=["settings"],
+            menu_options=["refresh_nodes", "settings"],
             description_placeholders={
                 "nodes": str(len(subentries)),
                 "guarded": str(guarded),
                 "offline": str(offline),
                 "deleted": str(deleted),
+                "last_refreshed": self._last_refreshed(),
             },
+        )
+
+    async def async_step_refresh_nodes(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
+        """Synchronize node availability and return to the integration page."""
+        if not matter_client_available(self.hass):
+            return self.async_abort(reason="matter_unavailable")
+        await self.config_entry.runtime_data.async_sync_nodes()
+        return self.async_abort(
+            reason="nodes_refreshed",
+            description_placeholders={"last_refreshed": self._last_refreshed()},
         )
 
     async def async_step_settings(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:

@@ -36,6 +36,7 @@ runs in the background, so offline or sleeping devices cannot hold up startup.
   24 hours.
 - Retries unreachable or sleeping devices at the next scheduled check.
 - Discovers Matter nodes automatically and manages each one as a native Home Assistant subentry.
+- Lets you refresh the Matter node list on demand, including each node's online/offline status.
 
 It is intentionally conservative: changing a label directly on a device or in
 another Matter client is preserved as long as that label is not empty.
@@ -90,19 +91,25 @@ configuration and label mappings are retained.
 
 After adding the integration, Matter Label Guard discovers the nodes retained by
 Home Assistant's Matter Server and creates one **Matter node** subentry for
-each. Open a node’s settings to see its current Matter label, choose the label
-to restore, and enable **Guard this label**. An unguarded node is kept in the
-list but is never changed.
+each. Open **Configure** on the parent integration and choose **Refresh Matter
+node list** to update the list and each node's online/offline status immediately.
+The Configure page shows when this list was last refreshed.
 
-Node titles start with their Matter identifier, for example `(@1:e) Frontdoor`.
+Open a node’s settings to see its current Matter label, choose the label to
+restore, and enable **Guard this label**. An unguarded node is kept in the list
+but is never changed.
+
+Node titles start with the numeric Matter node ID and its Matter identifier, for
+example `Node 014 (@1:e) Frontdoor`.
 `🛡` means its label is guarded; `⚠` means the node is currently offline; and
 `❌` means it has been deleted from Matter Server, which also disables guarding.
-Opening the node’s pencil action shows its current Matter label and status, and
+Opening a node's settings action shows its current Matter label and status, and
 lets you edit the guarded label or enable and disable guarding.
 
 The parent integration’s **Configure** screen shows the total number of node
-entries and the guarded, offline, and deleted counts. Its only setting is the
-check interval. Deleting a subentry stops Matter Label Guard from restoring that
+entries and the guarded, offline, and deleted counts, plus the last refresh
+time. It provides actions to refresh the node list and change the check
+interval. Deleting a subentry stops Matter Label Guard from restoring that
 node's label.
 
 ## Troubleshooting

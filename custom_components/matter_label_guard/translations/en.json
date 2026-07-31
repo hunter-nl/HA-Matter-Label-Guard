@@ -14,8 +14,9 @@
     "step": {
       "init": {
         "title": "Matter Label Guard",
-        "description": "{nodes} node entries · {guarded} guarded · {offline} offline · {deleted} deleted",
+        "description": "{nodes} node entries · {guarded} guarded · {offline} offline · {deleted} deleted\nLast refreshed: {last_refreshed}",
         "menu_options": {
+          "refresh_nodes": "Refresh Matter node list",
           "settings": "Check interval"
         }
       },
@@ -25,6 +26,10 @@
           "interval_minutes": "Check interval (minutes)"
         }
       }
+    },
+    "abort": {
+      "matter_unavailable": "The Matter integration is not currently loaded.",
+      "nodes_refreshed": "Matter node list refreshed at {last_refreshed}."
     }
   },
   "config_subentries": {
@@ -62,7 +67,8 @@
       "abort": {
         "no_nodes": "All currently discovered Matter nodes already have entries.",
         "node_not_found": "This Matter node is no longer retained by Matter Server.",
-        "matter_unavailable": "The Matter integration is not currently loaded."
+        "matter_unavailable": "The Matter integration is not currently loaded.",
+        "reconfigure_successful": "Matter node updated."
       }
     }
   }
