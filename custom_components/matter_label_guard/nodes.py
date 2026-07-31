@@ -72,9 +72,15 @@ def fabric_index(entry: ConfigEntry) -> int:
 
 
 def subentry_title(identifier: str, label: str, *, guarded: bool, deleted: bool, available: bool) -> str:
-    """Return an identifier-first title with compact node-state indicators."""
+    """Return a naturally sorted title with compact node-state indicators."""
     indicators = ["❌"] if deleted else ["🛡"] if guarded else []
     if not deleted and not available:
         indicators.append("⚠")
     suffix = f" {' '.join(indicators)}" if indicators else ""
-    return f"({identifier}){f' {label}' if label else ''}{suffix}"
+    try:
+        node_id = int(identifier.rsplit(":", maxsplit=1)[1], 16)
+    except IndexError, ValueError:
+        node_title = f"({identifier})"
+    else:
+        node_title = f"Node {node_id:03d} ({identifier})"
+    return f"{node_title}{f' {label}' if label else ''}{suffix}"
