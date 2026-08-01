@@ -4,6 +4,25 @@ If you find this project useful, consider supporting its development:
 <a href="https://www.buymeacoffee.com/hunter.nl" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"></a>
 
 # Changelog
+## [v1.2.1](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.2.1)
+
+
+
+### :question: Miscellaneous
+
+- [Fix(release): update changelog generation range to include all commits since v1.0.0](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/24) ([#24](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/24))
+
+- [Fix(release): refresh draft after publishing](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/23) ([#23](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/23))
+
+
+
+
+
+
+
+
+
+
 ## [v1.2.0](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.2.0)
 
 
@@ -145,25 +164,6 @@ If you find this project useful, consider supporting its development:
 
 
 
-
-
-## [v1.0.0](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.0.0)
-
-
-
-
-
-
-
-## ❤️ New Contributors
-
-
-* @releases-manager[bot] made their first contribution
-
-in [#1](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/1)
-
-
-* @hunter-nl made their first contribution
 
 
 ## Funding
