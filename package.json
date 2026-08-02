@@ -1,7 +1,7 @@
 {
   "name": "ha-matter-label-guard",
   "displayName": "Home Assistant Matter Label Guard",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Home Assistant integration to manage Matter node labels and check intervals.",
   "license": "AGPL-3.0-only",
   "author": "@hunter-nl"
