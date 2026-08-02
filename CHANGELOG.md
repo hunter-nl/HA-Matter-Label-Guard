@@ -4,16 +4,27 @@ If you find this project useful, consider supporting its development:
 <a href="https://www.buymeacoffee.com/hunter.nl" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"></a>
 
 # Changelog
+## [v1.2.3](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.2.3)
+
+
+
+### 🐛 Fixes
+
+- [Fix(release): update autolabeler configuration and permissions in release drafter](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/28) ([#28](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/28))
+
+
+
+
+
+
+
 ## [v1.2.2](https://github.com/hunter-nl/HA-Matter-Label-Guard/releases/tag/v1.2.2)
 
 
 
-### ❓ Miscellaneous
+### 🐛 Fixes
 
 - [Fix(release): update changelog generation range](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/26) ([#26](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/26))
-
-
-
 
 
 
@@ -25,14 +36,11 @@ If you find this project useful, consider supporting its development:
 
 
 
-### ❓ Miscellaneous
+### 🐛 Fixes
 
 - [Fix(release): update changelog generation range to include all commits since v1.0.0](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/24) ([#24](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/24))
 
 - [Fix(release): refresh draft after publishing](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/23) ([#23](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/23))
-
-
-
 
 
 
@@ -168,6 +176,9 @@ If you find this project useful, consider supporting its development:
 - [Docs: update HACS installation instructions and refactor README](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/5) ([#5](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/5))
 
 - [Fix(release): package HACS integration correctly](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/4) ([#4](https://github.com/hunter-nl/HA-Matter-Label-Guard/pull/4))
+
+
+
 
 
 
