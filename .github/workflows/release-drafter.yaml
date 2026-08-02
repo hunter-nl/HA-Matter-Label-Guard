@@ -15,12 +15,19 @@ permissions:
   contents: read
 
 jobs:
+  auto-label:
+    permissions:
+      contents: read
+      # write permission required for autolabeler
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter/autolabeler@v7
+
   update_release_draft:
     permissions:
       # write permission required to create a github release
       contents: write
-      # write permission required for autolabeler
-      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: release-drafter/release-drafter@v7

@@ -114,7 +114,7 @@ template: |
 
   **Full Changelog**: https://github.com/hunter-nl/HA-Matter-Label-Guard/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
 
-autolabelers:
+autolabeler:
   - label: "breaking"
     title:
       - "/breaking change/i"
