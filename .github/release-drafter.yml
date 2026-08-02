@@ -125,10 +125,10 @@ autolabeler:
   - label: "documentation"
     title:
       - "/^doc/i"
-  - label: "fix"
+  - label: "bug"
     title:
-      - "/^fix/i"
       - "/^bug/i"
+      - "/^fix/i"
   - label: "feature"
     title:
       - "/^feature/i"
