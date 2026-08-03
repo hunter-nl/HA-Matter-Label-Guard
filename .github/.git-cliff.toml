@@ -98,6 +98,7 @@ commit_parsers = [
   { field = "remote.pr_labels", pattern = "good first issue", skip = true },
   { field = "remote.pr_labels", pattern = "breaking", group = "<!-- 0 --> 🚨 Breaking changes" },
   { field = "remote.pr_labels", pattern = "enhancement", group = "<!-- 1 --> ✨ Features" },
+  { field = "remote.pr_labels", pattern = "feature", group = "<!-- 1 --> ✨ Features" },
   { field = "remote.pr_labels", pattern = "bug", group = "<!-- 2 --> 🐛 Fixes" },
   { field = "remote.pr_labels", pattern = "dependencies", group = "<!-- 3 --> ⬆️ Dependencies" },
   { field = "remote.pr_labels", pattern = "documentation", group = "<!-- 5 --> 📝 Documentation" },

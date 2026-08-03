@@ -16,6 +16,7 @@ permissions:
 
 jobs:
   auto-label:
+    if: github.event_name == 'pull_request'
     permissions:
       contents: read
       # write permission required for autolabeler
