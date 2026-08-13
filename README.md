@@ -6,7 +6,7 @@
 [![Validate][validate-badge]][validate-url]
 [![CI][ci-badge]][ci-url]
 [![License][license-badge]][license-url]
-[![Home-Assistant][ha-badge]][ha-url]
+[![Home Assistant][ha-badge]][ha-url]
 [![HACS Custom][hacs-badge]][hacs-url]
 
 [release-badge]: https://img.shields.io/github/v/release/hunter-nl/HA-Matter-Label-Guard?include_prereleases&sort=semver&display_name=release&label=Release
@@ -18,7 +18,7 @@
 [license-badge]: https://img.shields.io/github/license/hunter-nl/HA-Matter-Label-Guard?color=blue
 [license-url]: https://github.com/hunter-nl/HA-Matter-Label-Guard/blob/main/LICENSE
 [ha-badge]: https://img.shields.io/badge/Home--Assistant-2026.7.0%2B-green?logo=homeassistant
-[ha-url]: https://home-assistant.io
+[ha-url]: https://www.home-assistant.io
 [hacs-badge]: https://img.shields.io/badge/HACS-Custom-41BDF5?logo=homeassistantcommunitystore&logoColor=white
 [hacs-url]: https://www.hacs.xyz/docs/faq/custom_repositories/
 
@@ -52,20 +52,20 @@ another Matter client is preserved as long as that label is not empty.
 
 ### HACS (Recommended)
 
-1. Open **HACS** → **⋮** → **Custom repositories**
-2. Add repository: `hunter-nl/HA-Matter-Label-Guard`, category: **Integration**
-3. Find **Matter Label Guard** and download it
-4. Restart Home Assistant
-5. Add **Matter Label Guard** in **Settings → Devices & services → Add
-   integration**. Choose the check interval and submit it.
+1. Open **HACS** → **⋮** → **Custom repositories**.
+2. Add `hunter-nl/HA-Matter-Label-Guard` with category **Integration**.
+3. Find **Matter Label Guard** and download it.
+4. Restart Home Assistant.
+5. Open **Settings** → **Devices & services** → **Add
+   integration**. Select **Matter Label Guard**, and choose the check interval and submit it.
 
 ### Manual
 
 1. Copy `custom_components/matter_label_guard` into your Home Assistant
    `/config/custom_components/` directory.
 2. Restart Home Assistant
-3. Add **Matter Label Guard** in **Settings → Devices & services → Add
-   integration**. Choose the check interval and submit it.
+3. Open **Settings** → **Devices & services** → **Add
+   integration**. Select **Matter Label Guard**, and choose the check interval and submit it.
 
 The integration uses Home Assistant's existing Matter Server connection; it does
 not need a Matter Server URL, token, or a second WebSocket client.
